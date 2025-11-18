@@ -1,0 +1,15 @@
+{
+  "name": "tarea-8",
+  "version": "1.0.0",
+  "description": "Una demo de CI/CD para la tarea",
+  "main": "suma.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

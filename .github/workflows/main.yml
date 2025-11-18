@@ -1,0 +1,45 @@
+name: Pipeline de Tarea CI/CD
+
+# 1. Disparadores: Cuándo debe correr
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# 2. Trabajos: Qué debe hacer
+jobs:
+  construir-y-probar:
+    # 3. Ambiente: Usará una máquina virtual con Ubuntu
+    runs-on: ubuntu-latest
+
+    # 4. Pasos: La receta exacta
+    steps:
+    # Paso 1: Descarga nuestro código
+    - name: Clonar el código
+      uses: actions/checkout@v4  # <-- ACTUALIZADO
+
+    # Paso 2: Prepara el entorno de Node.js
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4  # <-- ACTUALIZADO
+      with:
+        node-version: '18'
+
+    # Paso 3: Instala las dependencias (ej. Jest)
+    - name: Instalar dependencias
+      run: npm install
+
+    # Paso 4: Ejecuta las pruebas (¡La CI!)
+    - name: Correr Pruebas
+      run: npm test
+
+    # Paso 5: Crea el paquete (¡La CD!)
+    - name: Construir el Paquete
+      run: npm pack
+
+    # Paso 6: Guarda el paquete para descargarlo
+    - name: Subir el Paquete (Artefacto)
+      uses: actions/upload-artifact@v4  # <-- ¡ESTA ES LA CORRECCIÓN PRINCIPAL!
+      with:
+        name: mi-paquete-npm
+        path: '*.tgz'
